@@ -1,0 +1,68 @@
+#include <iostream>
+#include <sstream>
+using namespace std;
+void quickSort(int *numbers, int left, int right)
+{
+    int element;
+    int l_uk = left;
+    int r_uk = right;
+    element = numbers[left];
+    while (left < right)
+    {
+        while ((numbers[right] >= element) && (left < right))
+            right--;
+        if (left != right)
+        {
+            numbers[left] = numbers[right];
+            left++;
+        }
+        while ((numbers[left] <= element) && (left < right))
+            left++;
+        if (left != right)
+        {
+            numbers[right] = numbers[left];
+            right--;
+        }
+    }
+    numbers[left] = element;
+    element = left;
+    left = l_uk;
+    right = r_uk;
+    if (left < element)
+        quickSort(numbers, left, element - 1);
+    if (right > element)
+        quickSort(numbers, element + 1, right);
+}
+int main(){
+    unsigned int length =0;
+
+    string str;
+    getline(cin,str);
+    istringstream stream1(str);
+    if(!(stream1>>length)){
+        cout<<"An error has occuried while reading input data."<<endl;
+        exit(0);
+    }
+
+    int *mas=new int [length];
+
+    string mas_str;
+    getline(cin,mas_str);
+    istringstream stream (mas_str);
+    for(int i=0;i<length;i++){
+        if(!(stream>>mas[i])){
+            cout<<"An error has occuried while reading input data."<<endl;
+            delete [] mas;
+            exit(0);
+        }
+    }
+
+quickSort(mas,0,length);
+
+    for(int i=0;i<length;i++){
+        cout<<mas[i]<<" ";
+    }
+    cout<<endl;
+    delete [] mas;
+    return 0;
+}
