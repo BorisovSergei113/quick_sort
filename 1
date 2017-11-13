@@ -1,40 +1,28 @@
 #include <iostream>
 #include <sstream>
 using namespace std;
-void quickSort(int *numbers, int left, int right)
-{
-    int element;
-    int l_uk = left;
-    int r_uk = right;
-    element = numbers[left];
-    while (left < right)
-    {
-        while ((numbers[right] >= element) && (left < right))
-            right--;
-        if (left != right)
-        {
-            numbers[left] = numbers[right];
-            left++;
-        }
-        while ((numbers[left] <= element) && (left < right))
-            left++;
-        if (left != right)
-        {
-            numbers[right] = numbers[left];
-            right--;
+
+void quick_Sort(int *mas,int length){ 
+    int size = length;
+    int k =0;
+    int c=mas[length/2];
+    do {
+        while (mas[k]<c) k++;
+        while (mas[length]>c) length--;
+        if(k<=length){
+            swap(mas[k], mas[length]);
+            k++;
+            length--;
         }
     }
-    numbers[left] = element;
-    element = left;
-    left = l_uk;
-    right = r_uk;
-    if (left < element)
-        quickSort(numbers, left, element - 1);
-    if (right > element)
-        quickSort(numbers, element + 1, right);
+    while (k<=length);                    
+    if(length>0) quick_Sort(mas,length); 
+    if(size>k) quick_Sort(mas+k, size-k);   
+
 }
+
 int main(){
-    unsigned int length =0;
+     int length =0;
 
     string str;
     getline(cin,str);
@@ -57,12 +45,13 @@ int main(){
         }
     }
 
-quickSort(mas,0,length);
+    quick_Sort(mas, length-1);
 
     for(int i=0;i<length;i++){
         cout<<mas[i]<<" ";
     }
     cout<<endl;
+
     delete [] mas;
     return 0;
 }
